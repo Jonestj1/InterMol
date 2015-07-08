@@ -86,15 +86,15 @@ class GromacsGroParser(object):
         """
         with open(self.gro_file, 'w') as gro:
             gro.write("{0}\n".format(system.name))
-            gro.write("{0}\n".format(system.n_atoms))
+            gro.write("   {0}\n".format(system.n_atoms))
             for n, atom in enumerate(system.atoms):
                 if atom.name.isdigit():
                     # Kluge for atoms read in from a LAMMPS data file.
                     atom.name = "LMP_{0}".format(atom.name)
-                gro.write('{0:5d}{1:<5s}{2:5s}{3:5d}'.format(
+                gro.write('{0:5d}{1:<8s}{2:>2s}{3:5d}'.format(
                         atom.residue_index, atom.residue_name, atom.name, n + 1))
                 for pos in atom.position:
-                    gro.write('{0:17.12f}'.format(pos.value_in_unit(nanometers)))
+                    gro.write('{0:8.3f}'.format(pos.value_in_unit(nanometers)))
                 gro.write('\n')
 
             # Check for rectangular; should be symmetric, so we don't have to

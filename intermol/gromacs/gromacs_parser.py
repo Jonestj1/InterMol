@@ -515,16 +515,16 @@ class GromacsParser(object):
             if atom.atomtype[0].isdigit():
                 atom.atomtype[0] = "LMP_{0}".format(atom.atomtype[0])
 
-            top.write('{0:6d} {1:18s} {2:6d} {3:8s} {4:8s} {5:6d} '
-                      '{6:18.8f} {7:18.8f}'.format(
-                        i + 1,
-                        atom.atomtype[0],
-                        atom.residue_index,
-                        atom.residue_name,
-                        atom.name,
-                        atom.cgnr,
-                        atom.charge[0].value_in_unit(units.elementary_charge),
-                        atom.mass[0].value_in_unit(units.atomic_mass_unit)))
+            top.write('{0:10d}  {1:10s} {2:6d} {3:>8s} {4:>9s} {5:9d} '
+                      '{6:>9.3f} {7:9.3f}'.format(
+                      i + 1,
+                      atom.atomtype[0],
+                      atom.residue_index,
+                      atom.residue_name,
+                      atom.name,
+                      atom.cgnr,
+                      atom.charge[0].value_in_unit(units.elementary_charge),
+                      atom.mass[0].value_in_unit(units.atomic_mass_unit)))
 
             # Alternate states -- only one for now.
             if atom.atomtype.get(1):
@@ -572,7 +572,7 @@ class GromacsParser(object):
         for bond in bondlist:
             bond_params = self.get_parameter_list_from_force(bond)
             b_type, bond_params = self.canonical_bond(bond_params, bond, direction='from')
-            top.write('{0:7d} {1:7d} {2:4s}'.format(
+            top.write('{0:5d} {1:5d} {2:>5s}'.format(
                 bond.atom1, bond.atom2, b_type))
 
             param_units = self.unitvars[bond.forcetype.__class__.__name__]
@@ -589,7 +589,7 @@ class GromacsParser(object):
         for angle in anglelist:
             angle_params = self.get_parameter_list_from_force(angle)
             a_type, angle_params = self.canonical_angle(angle_params, angle, direction='from')
-            top.write('{0:7d} {1:7d} {2:7d} {3:4s}'.format(
+            top.write('{0:5d} {1:5d} {2:5d} {3:>5s}'.format(
                 angle.atom1, angle.atom2, angle.atom3, a_type))
 
             param_units = self.unitvars[angle.forcetype.__class__.__name__]
@@ -608,7 +608,7 @@ class GromacsParser(object):
             d_type, dihedral_params = self.canonical_dihedral(dihedral_params, dihedral, direction='from')
 
             atoms = dihedral.atom1, dihedral.atom2, dihedral.atom3, dihedral.atom4
-            top.write('{0:7d} {1:7d} {2:7d} {3:7d} {4:4s}'.format(
+            top.write('{0:5d} {1:5d} {2:5d} {3:5d} {4:>5s}'.format(
                 atoms[0], atoms[1], atoms[2], atoms[3], d_type))
 
             converted_dihedraltype = self.gromacs_dihedral_types[d_type]
