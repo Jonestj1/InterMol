@@ -554,9 +554,9 @@ class GromacsParser(object):
                     # We have a scaleQQ as well, which has no units.
                     pair_params.insert(0, pair.scaleQQ)
                     param_units.insert(0, units.dimensionless)
-                for i, param in enumerate(pair_params):
-                        top.write("{0:18.8e}".format(
-                                param.value_in_unit(param_units[i])))
+                # for i, param in enumerate(pair_params):
+                #         top.write("{0:18.8e}".format(
+                #                 param.value_in_unit(param_units[i])))
                 top.write('\n')
             else:
                 logger.warn("Found unsupported pair type {0}".format(
